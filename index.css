@@ -1,30 +1,119 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #f4f6f9;
+    --text-color: #2c3e50;
+    --card-background: white;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+    color: var(--text-color);
 }
 
 .container {
-    width: 80%;
-    margin: 40px auto;
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+}
+
+h2 {
     text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-weight: 500;
 }
 
 .settings, .questionnaire, .result {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+select[multiple] {
+    height: 90px; /* Reduced height */
+    overflow-y: auto;
+}
+
+select[multiple] option {
+    padding: 6px 10px;
 }
 
 button {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
     border: none;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 4px;
     cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
-    background-color: #3e8e41;
+    background-color: #2980b9;
+}
+
+.quiz-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-container input {
+    width: auto;
+}
+
+#answer {
+    text-align: center;
+    font-size: 16px;
+}
+
+#result, #questionNumber {
+    text-align: center;
+    color: var(--secondary-color);
+}
+
+#chart {
+    max-width: 100%;
+    margin-top: 15px;
 }

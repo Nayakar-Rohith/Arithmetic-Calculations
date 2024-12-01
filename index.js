@@ -56,7 +56,7 @@ function generateQuestion() {
             break;
         case 'division':
             question.textContent = `What is ${num1} ÷ ${num2}?`;
-            question.dataset.correctAnswer = (num1 / num2).toFixed(2); // For precise division
+            question.dataset.correctAnswer = (num1 / num2).toFixed(2); 
             break;
     }
 
@@ -72,11 +72,11 @@ function submitAnswerHandler() {
         correctAnswers++;
         result.textContent = 'Correct!';
     } else {
-        result.textContent = `Incorrect. The correct answer is ${correctAnswer}.`;
+        result.textContent = 'Incorrect. '+showCorrect.checked?'The correct answer is '+correctAnswer:'';
     }
 
     if (showCorrect.checked) {
-        result.textContent = `The correct answer is ${correctAnswer}.`;
+        result.textContent = showCorrect.checked?`The correct answer is ${correctAnswer}.`:'';
     }
 
     answer.value = '';
@@ -94,18 +94,32 @@ function endQuiz() {
     resultDiv.style.display = 'block';
     let endTime = new Date().getTime();
     let timeElapsed = (endTime - startTime) / 1000;
-    timeTaken.textContent = `Time taken: ${timeElapsed} seconds`;
+    timeTaken.textContent = timer.checked?`Time taken: ${timeElapsed} seconds`:'';
     score.textContent = `Score: ${correctAnswers} out of ${numQuestions.value} (${((correctAnswers / numQuestions.value) * 100).toFixed(2)}%)`;
 
-    // Draw chart
+    canvasHandle()
+}
+function canvasHandle(){
     let ctx = chart.getContext('2d');
-    ctx.clearRect(0, 0, chart.width, chart.height);
-    ctx.beginPath();
-    ctx.arc(chart.width / 2, chart.height / 2, chart.width / 2 - 20, 0, (correctAnswers / numQuestions.value) * 2 * Math.PI);
-    ctx.fillStyle = '#4CAF50';
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(chart.width / 2, chart.height / 2, chart.width / 2 - 20, (correctAnswers / numQuestions.value) * 2 * Math.PI, 2 * Math.PI);
-    ctx.fillStyle = '#ccc';
-    ctx.fill();
+
+ctx.clearRect(0, 0, chart.width, chart.height);
+
+const centerX = chart.width / 2;
+const centerY = chart.height / 2;
+const radius = Math.min(chart.width, chart.height) / 2 - 20; 
+
+ctx.beginPath();
+ctx.moveTo(centerX, centerY);
+ctx.arc(centerX, centerY, radius, 0, (correctAnswers / numQuestions.value) * 2 * Math.PI);
+ctx.closePath();
+ctx.fillStyle = '#4CAF50'; 
+ctx.fill();
+
+ctx.beginPath();
+ctx.moveTo(centerX, centerY);
+ctx.arc(centerX, centerY, radius, (correctAnswers / numQuestions.value) * 2 * Math.PI, 2 * Math.PI);
+ctx.closePath();
+ctx.fillStyle = '#ccc'; 
+ctx.fill();
+
 }
