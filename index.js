@@ -31,23 +31,32 @@ function startQuizHandler() {
     generateQuestion();
 }
 
+function getRandomOperation() {
+    const selectedOperations = Array.from(operations.selectedOptions).map(option => option.value);
+    return selectedOperations[Math.floor(Math.random() * selectedOperations.length)];
+}
+
 function generateQuestion() {
     let num1 = Math.floor(Math.random() * numRange.value) + 1;
     let num2 = Math.floor(Math.random() * numRange.value) + 1;
-    let operation = operations.value;
+    let operation = getRandomOperation();
 
     switch (operation) {
         case 'addition':
             question.textContent = `What is ${num1} + ${num2}?`;
+            question.dataset.correctAnswer = num1 + num2;
             break;
         case 'subtraction':
             question.textContent = `What is ${num1} - ${num2}?`;
+            question.dataset.correctAnswer = num1 - num2;
             break;
         case 'multiplication':
             question.textContent = `What is ${num1} × ${num2}?`;
+            question.dataset.correctAnswer = num1 * num2;
             break;
         case 'division':
             question.textContent = `What is ${num1} ÷ ${num2}?`;
+            question.dataset.correctAnswer = (num1 / num2).toFixed(2); // For precise division
             break;
     }
 
@@ -57,27 +66,9 @@ function generateQuestion() {
 submitAnswer.addEventListener('click', submitAnswerHandler);
 
 function submitAnswerHandler() {
-    let correctAnswer;
-    let num1 = parseInt(question.textContent.split(' ')[2]);
-    let num2 = parseInt(question.textContent.split(' ')[4]);
-    let operation = operations.value;
+    const correctAnswer = parseFloat(question.dataset.correctAnswer);
 
-    switch (operation) {
-        case 'addition':
-            correctAnswer = num1 + num2;
-            break;
-        case 'subtraction':
-            correctAnswer = num1 - num2;
-            break;
-        case 'multiplication':
-            correctAnswer = num1 * num2;
-            break;
-        case 'division':
-            correctAnswer = num1 / num2;
-            break;
-    }
-
-    if (parseInt(answer.value) === correctAnswer) {
+    if (parseFloat(answer.value) === correctAnswer) {
         correctAnswers++;
         result.textContent = 'Correct!';
     } else {
@@ -104,7 +95,7 @@ function endQuiz() {
     let endTime = new Date().getTime();
     let timeElapsed = (endTime - startTime) / 1000;
     timeTaken.textContent = `Time taken: ${timeElapsed} seconds`;
-    score.textContent = `Score: ${correctAnswers} out of ${numQuestions.value} (${(correctAnswers / numQuestions.value) * 100}%)`;
+    score.textContent = `Score: ${correctAnswers} out of ${numQuestions.value} (${((correctAnswers / numQuestions.value) * 100).toFixed(2)}%)`;
 
     // Draw chart
     let ctx = chart.getContext('2d');
