@@ -70,13 +70,13 @@ function submitAnswerHandler() {
 
     if (parseFloat(answer.value) === correctAnswer) {
         correctAnswers++;
-        result.textContent = 'Correct!';
+        result.textContent = showCorrect.checked?'Correct!':'';
     } else {
-        result.textContent = 'Incorrect. '+showCorrect.checked?'The correct answer is '+correctAnswer:'';
+        result.textContent = showCorrect.checked?`Incorrect. The correct answer is ${correctAnswer}`:'';
     }
 
     if (showCorrect.checked) {
-        result.textContent = showCorrect.checked?`The correct answer is ${correctAnswer}.`:'';
+        result.textContent = `The correct answer is ${correctAnswer}.`;
     }
 
     answer.value = '';
